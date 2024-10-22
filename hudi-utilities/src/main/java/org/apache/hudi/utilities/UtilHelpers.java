@@ -327,7 +327,7 @@ public class UtilHelpers {
       sparkConf.setIfMissing("spark.eventLog.overwrite", "true");
       sparkConf.setIfMissing("spark.eventLog.enabled", "true");
     }
-    sparkConf.set("spark.ui.port", additionalConfigs.getOrDefault("spark.ui.port", "8090"));
+    sparkConf.setIfMissing("spark.ui.port", additionalConfigs.getOrDefault("spark.ui.port", "8090"));
     sparkConf.setIfMissing("spark.driver.maxResultSize", "2g");
     sparkConf.setIfMissing("spark.serializer", "org.apache.spark.serializer.KryoSerializer");
     sparkConf.setIfMissing("spark.kryo.registrator", "org.apache.spark.HoodieSparkKryoRegistrar");
@@ -344,7 +344,7 @@ public class UtilHelpers {
 
   private static SparkConf buildSparkConf(String appName, Map<String, String> additionalConfigs) {
     final SparkConf sparkConf = new SparkConf().setAppName(appName);
-    sparkConf.set("spark.ui.port", additionalConfigs.getOrDefault("spark.ui.port", "8090"));
+    sparkConf.setIfMissing("spark.ui.port", additionalConfigs.getOrDefault("spark.ui.port", "8090"));
     sparkConf.setIfMissing("spark.driver.maxResultSize", "2g");
     sparkConf.setIfMissing("spark.serializer", "org.apache.spark.serializer.KryoSerializer");
     sparkConf.setIfMissing("spark.kryo.registrator", "org.apache.spark.HoodieSparkKryoRegistrar");
