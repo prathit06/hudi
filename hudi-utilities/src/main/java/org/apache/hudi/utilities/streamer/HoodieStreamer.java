@@ -439,6 +439,11 @@ public class HoodieStreamer implements Serializable {
                     + " If not defined then defaults to streamer-{cfg.targetTableName}.")
     public String sparkAppName = "";
 
+    @Parameter(names = {"--spark-ui-port"},
+            description = "spark ui port to use while creating spark context,"
+                    + " if not defined then defaults to 8090.")
+    public String sparkUiPort = "";
+
     public boolean isAsyncCompactionEnabled() {
       return continuousMode && !forceDisableCompaction
           && HoodieTableType.MERGE_ON_READ.equals(HoodieTableType.valueOf(tableType));
@@ -597,6 +602,9 @@ public class HoodieStreamer implements Serializable {
   public static void main(String[] args) throws Exception {
     final Config cfg = getConfig(args);
     Map<String, String> additionalSparkConfigs = SchedulerConfGenerator.getSparkSchedulingConfigs(cfg);
+    if (!StringUtils.isNullOrEmpty(cfg.sparkUiPort)) {
+      additionalSparkConfigs.put("spark.ui.port", cfg.sparkUiPort);
+    }
     JavaSparkContext jssc = null;
     String sparkAppName;
     if (!StringUtils.isNullOrEmpty(cfg.sparkAppName)) {
