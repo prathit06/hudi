@@ -36,6 +36,7 @@ import org.apache.spark.sql.sources.{BaseRelation, Filter}
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.vectorized.{ColumnarBatch, ColumnVector}
 import org.apache.spark.storage.StorageLevel
+import org.apache.spark.api.java.JavaSparkContext
 
 import java.time.ZoneId
 import java.util.TimeZone
@@ -103,5 +104,9 @@ abstract class BaseSpark3Adapter extends SparkAdapter with Logging {
                                                  queryExecution: QueryExecution,
                                                  name: Option[String])(body: => T): T = {
       SQLExecution.withNewExecutionId(queryExecution, name)(body)
+  }
+
+  override def stopSparkContext(jssc: JavaSparkContext, exitCode: Int) = {
+    jssc.stop()
   }
 }

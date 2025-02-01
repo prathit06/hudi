@@ -41,6 +41,7 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.internal.SQLConf
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.storage.StorageLevel._
+import org.apache.spark.api.java.JavaSparkContext
 
 /**
  * Implementation of [[SparkAdapter]] for Spark 3.4.x branch
@@ -143,5 +144,9 @@ class Spark3_4Adapter extends BaseSpark3Adapter {
                                        options: Map[String, String],
                                        hadoopConf: Configuration): SparkParquetReader = {
     Spark34ParquetReader.build(vectorized, sqlConf, options, hadoopConf)
+  }
+
+  override def stopSparkContext(jssc: JavaSparkContext, exitCode: Int) = {
+    jssc.stop()
   }
 }
