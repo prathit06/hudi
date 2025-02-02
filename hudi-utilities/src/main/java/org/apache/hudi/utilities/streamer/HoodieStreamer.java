@@ -20,7 +20,6 @@
 package org.apache.hudi.utilities.streamer;
 
 import org.apache.hudi.DataSourceWriteOptions;
-import org.apache.hudi.HoodieSparkUtils;
 import org.apache.hudi.HoodieWriterUtils;
 import org.apache.hudi.SparkAdapterSupport$;
 import org.apache.hudi.async.AsyncClusteringService;
