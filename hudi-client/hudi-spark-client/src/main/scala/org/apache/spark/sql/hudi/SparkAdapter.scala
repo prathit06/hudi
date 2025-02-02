@@ -43,6 +43,7 @@ import org.apache.spark.sql.sources.{BaseRelation, Filter}
 import org.apache.spark.sql.types.{DataType, Metadata, StructType}
 import org.apache.spark.sql.vectorized.{ColumnVector, ColumnarBatch}
 import org.apache.spark.storage.StorageLevel
+import org.apache.spark.api.java.JavaSparkContext
 
 import java.util.{Locale, TimeZone}
 
@@ -239,4 +240,7 @@ trait SparkAdapter extends Serializable {
   def sqlExecutionWithNewExecutionId[T](sparkSession: SparkSession,
                                         queryExecution: QueryExecution,
                                         name: Option[String] = None)(body: => T): T
+
+  def stopSparkContext(jssc: JavaSparkContext , exitCode: Int): Unit
+
 }
